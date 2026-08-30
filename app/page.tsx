@@ -22,6 +22,19 @@ type SystemCase = {
   media: "control" | "maintenance" | "traveller";
 };
 
+type Project = {
+  status: string;
+  title: string;
+  text: string;
+  note: string;
+  stack: string;
+  media: "utility" | "rolodex" | null;
+  links: Array<{
+    label: string;
+    href: string;
+  }>;
+};
+
 const systemCases: SystemCase[] = [
   {
     number: "01",
@@ -67,7 +80,7 @@ const systemCases: SystemCase[] = [
   },
 ];
 
-const projects = [
+const projects: Project[] = [
   {
     status: "Public Repository · Learning Build",
     title: "UtilityOps Manager",
@@ -292,7 +305,7 @@ export default function Home() {
           ))}
         </nav>
         <div className="rail-actions">
-          <a className="button accent" href="/resume.pdf" download>
+          <a className="button accent" href="/resume.pdf" download="Alen-P-Jose-Resume.pdf">
             Download résumé ↓
           </a>
           <a className="button outline-dark" href="#contact">
@@ -323,7 +336,7 @@ export default function Home() {
               {label}
             </a>
           ))}
-          <a href="/resume.pdf" download>
+          <a href="/resume.pdf" download="Alen-P-Jose-Resume.pdf">
             Résumé ↓
           </a>
           <a href="#contact" onClick={() => setOpen(false)}>
@@ -687,7 +700,7 @@ export default function Home() {
             </div>
             <div>
               <span>Résumé</span>
-              <a href="/resume.pdf" download>
+              <a href="/resume.pdf" download="Alen-P-Jose-Resume.pdf">
                 Download PDF ↓
               </a>
             </div>
@@ -696,7 +709,6 @@ export default function Home() {
         <footer>
           <span>ALEN / MANUFACTURING SYSTEMS</span>
           <div className="footer-links">
-            <a href="/settings" aria-label="Open private site analytics">Settings</a>
             <a href="#top">Back to top ↑</a>
           </div>
         </footer>
