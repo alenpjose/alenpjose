@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import { EntryCard } from "@/components/entry-card";
+import { projectEntries } from "@/content/projects";
+
+export const metadata: Metadata = { title: "Projects", description: "Independent builds, learning projects, experiments, and early concepts with their maturity made clear.", openGraph: { title: "Projects | Alen P. Jose", description: "Independent builds and learning projects with their maturity made clear." } };
+export default function ProjectsPage() { return <><header className="index-hero page-section"><p className="eyebrow">Independent work</p><h1>Projects used to test ideas.</h1><p className="lede">Independent projects give me room to explore software, information design, and AI systems outside production work. Some are working applications, while others remain experiments or concepts. Their status is shown plainly so a learning build is not mistaken for a deployed product.</p></header><section className="page-section card-grid" aria-label="Projects">{projectEntries.map((entry) => <EntryCard key={entry.slug} href={entry.hasDetailPage ? `/projects/${entry.slug}` : undefined} eyebrow={entry.status} title={entry.title} summary={entry.summary} topics={entry.topics} note={!entry.hasDetailPage ? entry.currentLimits : undefined} />)}</section></>; }

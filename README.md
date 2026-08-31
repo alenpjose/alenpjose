@@ -33,7 +33,7 @@ npm run lint
 npm run build
 ```
 
-The smoke test builds and starts the production application, then checks the homepage, résumé, and removed Settings route:
+The smoke test builds and starts the production application, then checks every public route, invalid slugs, the résumé, and the removed Settings route:
 
 ```bash
 npm test
@@ -71,8 +71,12 @@ The public résumé is stored at `public/resume.pdf` and is served directly at `
 
 To replace it, export the approved résumé as a PDF, keep the repository filename as `public/resume.pdf`, and verify the route on desktop and mobile. The download link can present a more descriptive filename to visitors without changing the public route.
 
-The current generator is `scripts/generate_resume.py`. Résumé content changes should be reviewed separately from infrastructure changes.
+The repository intentionally stores only the approved PDF. Résumé generation is kept outside the website build so Vercel does not require document-generation dependencies.
 
-## Content roadmap
+## Portfolio content
 
-This migration preserves the current single-page portfolio. The approved multipage Work, Projects, About, and résumé content will be introduced separately, followed by the repository-based MDX writing system.
+Professional case studies are stored as typed entries in `content/work.ts`. Independent projects and explorations are stored in `content/projects.ts`.
+
+Each entry records its maturity, evidence boundary, AI involvement, revision date, and optional limits or next test. Edit these source entries rather than duplicating substantive copy inside route components. Work and project detail routes are statically generated from entries that have approved public detail pages.
+
+The repository-based MDX writing system and the “Observations and Opinions” navigation item are planned as a separate change.
