@@ -1,82 +1,40 @@
-# Alen P. Jose Portfolio
+# Alen P. Jose
 
-Portfolio website for Alen P. Jose. The application runs as a native Next.js App Router project and is deployed to Vercel.
+I am an additive manufacturing production leader who translates shop-floor constraints and customer requirements into clear system needs. My work connects operating judgment with process improvement, software, automation, and a developing practical knowledge of AI systems.
 
-## Requirements
+My experience spans additive application discovery, DFAM, equipment service, production planning, quality, maintenance, post-processing, and the systems used to control work on the floor. I learn by building and testing, with an emphasis on understanding where a tool is useful, where it fails, and what should remain deterministic or human-reviewed.
 
-- Node.js 22.x
-- npm (included with Node.js)
+[Portfolio](https://alenpjose.ca) · [Selected work](https://alenpjose.ca/work) · [Projects](https://alenpjose.ca/projects) · [Résumé](https://alenpjose.ca/resume.pdf) · [LinkedIn](https://www.linkedin.com/in/alenpjose)
 
-## Local development
+## About this repository
 
-Install the exact dependency versions recorded in `package-lock.json`:
+This repository contains the source for [alenpjose.ca](https://alenpjose.ca). It is a statically generated Next.js App Router site deployed to Vercel from `main`, with Vercel Web Analytics enabled.
+
+Professional case studies are maintained as typed entries in `content/work.ts`. Independent projects and explorations are maintained in `content/projects.ts`. These entries record maturity, evidence boundaries, AI involvement, revision dates, and current limits without forcing every field onto the public page.
+
+## Development
+
+The project requires Node.js 22.x and npm. Install the reviewed lockfile with lifecycle scripts disabled, then start the development server:
 
 ```bash
 npm ci --ignore-scripts
-```
-
-Start the development server:
-
-```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
-
-## Verification
-
-Run the checks independently:
+Run the verification suite before opening a pull request:
 
 ```bash
 npm run typecheck
 npm run lint
-npm run build
-```
-
-The smoke test builds and starts the production application, then checks every public route, invalid slugs, the résumé, and the removed Settings route:
-
-```bash
 npm test
 ```
 
-To run the production server after a successful build:
+`npm test` creates a production build and checks every public route, invalid slugs, the résumé, and removed legacy routes.
 
-```bash
-npm run start
-```
+## Content, résumé, and deployment
 
-## Vercel deployment
+Edit approved work and project content in the `content` directory rather than duplicating substantive copy inside route components. Public media belongs in `public/assets` and must be employer-approved or sanitized.
 
-Import this GitHub repository into Vercel and keep the framework preset set to Next.js. Vercel detects the build and output settings automatically.
+The approved résumé is stored at `public/resume.pdf` and served directly from `/resume.pdf`. Replace that file with an approved PDF using the same repository filename, then verify the route and the visible download links on desktop and mobile.
 
-The project is pinned to Node.js 22.x through `package.json`. Preview deployments are created from pull requests and production deployments are created from the configured production branch.
-
-Do not attach or change the `alenpjose.ca` custom domain until the generated Vercel production URL has been opened and verified.
-
-## Web Analytics
-
-The root layout includes Vercel Web Analytics through `@vercel/analytics`. After creating the Vercel project:
-
-1. Open the project in Vercel.
-2. Open **Analytics**.
-3. Enable Web Analytics.
-4. Redeploy the project.
-5. Confirm a request to Vercel's Analytics endpoint appears on the deployed site.
-
-The former Cloudflare Worker, D1 visitor database, private Settings page, and ChatGPT Sites authentication are not part of this application.
-
-## Résumé
-
-The public résumé is stored at `public/resume.pdf` and is served directly at `/resume.pdf`.
-
-To replace it, export the approved résumé as a PDF, keep the repository filename as `public/resume.pdf`, and verify the route on desktop and mobile. The download link can present a more descriptive filename to visitors without changing the public route.
-
-The repository intentionally stores only the approved PDF. Résumé generation is kept outside the website build so Vercel does not require document-generation dependencies.
-
-## Portfolio content
-
-Professional case studies are stored as typed entries in `content/work.ts`. Independent projects and explorations are stored in `content/projects.ts`.
-
-Each entry records its maturity, evidence boundary, AI involvement, revision date, and optional limits or next test. Edit these source entries rather than duplicating substantive copy inside route components. Work and project detail routes are statically generated from entries that have approved public detail pages.
-
-The repository-based MDX writing system and the “Observations and Opinions” navigation item are planned as a separate change.
+Pull requests receive Vercel preview deployments. Merges to `main` create production deployments for `alenpjose.ca`; `www.alenpjose.ca` redirects to the canonical hostname.
