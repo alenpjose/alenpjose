@@ -27,7 +27,7 @@ async function waitForServer(server, logs) {
   throw new Error(`next start did not become ready:\n${logs()}`);
 }
 
-test("native Next.js production routes", { timeout: 60_000 }, async () => {
+test("native Next.js portfolio routes", { timeout: 90_000 }, async () => {
   let output = "";
   const nextBin = fileURLToPath(
     new URL("../node_modules/next/dist/bin/next", import.meta.url),
@@ -52,10 +52,28 @@ test("native Next.js production routes", { timeout: 60_000 }, async () => {
   try {
     await waitForServer(server, () => output);
 
-    const homepage = await fetch(baseUrl);
-    assert.equal(homepage.status, 200);
-    assert.match(homepage.headers.get("content-type") ?? "", /^text\/html\b/i);
-    assert.doesNotMatch(await homepage.text(), /href=["']\/settings["']/i);
+    const routes = new Map([
+      ["/", "Additive manufacturing leadership"],
+      ["/work", "Work shaped by what production required"],
+      ["/work/additive-application-judgment", "The printer alone does not determine"],
+      ["/work/production-workflow-control", "selected Odoo"],
+      ["/work/maintenance-error-traceability", "QR-linked entry"],
+      ["/work/slip-maker", "Llama 3.2"],
+      ["/projects", "Projects used to test ideas"],
+      ["/projects/utilityops-readiness", "synthetic work-order examples"],
+      ["/projects/rolodex", "record text, links, PDFs"],
+      ["/about", "For the love of learning"],
+    ]);
+
+    for (const [route, expectedText] of routes) {
+      const response = await fetch(`${baseUrl}${route}`);
+      assert.equal(response.status, 200, route);
+      assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+      const html = await response.text();
+      assert.match(html, new RegExp(expectedText, "i"), route);
+      assert.doesNotMatch(html, /href=["']\/settings["']/i);
+      assert.doesNotMatch(html, /four production staff/i);
+    }
 
     const resume = await fetch(`${baseUrl}/resume.pdf`);
     assert.equal(resume.status, 200);
@@ -65,6 +83,12 @@ test("native Next.js production routes", { timeout: 60_000 }, async () => {
 
     const settings = await fetch(`${baseUrl}/settings`);
     assert.equal(settings.status, 404);
+
+    const invalidWork = await fetch(`${baseUrl}/work/not-a-public-entry`);
+    assert.equal(invalidWork.status, 404);
+
+    const conceptDetail = await fetch(`${baseUrl}/projects/present`);
+    assert.equal(conceptDetail.status, 404);
   } finally {
     server.kill();
   }
