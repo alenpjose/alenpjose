@@ -132,9 +132,12 @@ a.entry-card:hover { border-color: var(--accent); transform: translateY(-3px); }
 .entry-media { margin: 70px 0; }
 .entry-media video, .entry-media > img { width: 100%; max-height: 720px; border: 1px solid var(--line); background: var(--dark); object-fit: contain; }
 .entry-media.diagram > img { max-height: 620px; padding: 30px; background: var(--paper); }
+.entry-media.portrait { max-width: 480px; margin-right: auto; margin-left: auto; }
+.entry-media.portrait > img { width: 100%; height: auto; max-height: none; background: transparent; object-fit: contain; }
 .entry-media figcaption { margin-top: 10px; color: var(--muted); font-size: 0.72rem; }
-.media-gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; }
-.media-gallery img { width: 100%; height: 100%; min-height: 220px; object-fit: cover; border: 1px solid var(--line); }
+.media-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.media-gallery img { width: 100%; height: auto; min-height: 0; object-fit: contain; border: 1px solid var(--line); background: var(--paper); }
+.media-gallery img:first-child { grid-column: 1 / -1; }
 .detail-body { max-width: 780px; margin: 80px auto 0; }
 .detail-body section + section { margin-top: 70px; }
 .detail-body h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); }
@@ -201,6 +204,8 @@ a.entry-card:hover { border-color: var(--accent); transform: translateY(-3px); }
   .entry-card { padding: 26px 22px; }
   .credentials-grid div:nth-child(odd), .credentials-grid div:nth-child(even) { padding: 20px 0; border-left: 0; }
   .project-feature { width: 100%; padding-right: 16px; padding-left: 16px; }
+  .media-gallery { grid-template-columns: 1fr; }
+  .media-gallery img:first-child { grid-column: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {

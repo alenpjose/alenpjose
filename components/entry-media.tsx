@@ -34,13 +34,16 @@ export function EntryMedia({ media }: { media: Media }) {
   }
 
   if (media.src) {
+    const portrait = media.kind === "image";
     return (
-      <figure className={`entry-media${media.kind === "diagram" ? " diagram" : ""}`}>
+      <figure
+        className={`entry-media${media.kind === "diagram" ? " diagram" : ""}${portrait ? " portrait" : ""}`}
+      >
         <Image
           src={media.src}
           alt={media.alt}
-          width={960}
-          height={840}
+          width={portrait ? 742 : 960}
+          height={portrait ? 1536 : 840}
           sizes="(max-width: 760px) 100vw, 60vw"
         />
         <figcaption>{media.caption}</figcaption>
