@@ -39,17 +39,24 @@ test("an empty heuristic array omits only the reasoning section", () => {
   assert.match(markdown, /^## Out of scope$/m);
 });
 
-test("buttons disclose the exact prompt and exports match generated sources", async () => {
+test("beta copy flow keeps Claude prefill and gives ChatGPT a copy-first path", async () => {
   const html = await readFile(new URL("../out/index.html", import.meta.url), "utf8");
   assert.ok(html.includes(twinPrompt.replaceAll("'", "&#x27;")));
+  assert.ok(html.includes("Professional profile · Beta"));
+  assert.ok(html.includes("Copy prompt + profile"));
+  assert.ok(html.includes("Copy prompt only"));
   for (const link of twinAssistantLinks) {
     const url = new URL(link.href);
-    assert.equal(url.searchParams.get("q"), twinPrompt);
-    assert.deepEqual([...url.searchParams.keys()], url.hostname === "chatgpt.com" ? ["hints", "q"] : ["q"]);
+    if (url.hostname === "chatgpt.com") assert.equal(url.search, "");
+    if (url.hostname === "claude.ai") assert.equal(url.searchParams.get("q"), twinPrompt);
     const anchor = [...html.matchAll(/<a\s[^>]*>/g)].find(([tag]) => tag.includes(`href="${link.href.replaceAll("&", "&amp;").replaceAll("'", "&#x27;")}"`))?.[0];
     assert.ok(anchor, link.label);
     assert.match(anchor, /target="_blank"/);
     assert.match(anchor, /rel="noopener noreferrer"/);
   }
-  for (const file of ["twin.md", "llms.txt"]) assert.equal(await readFile(new URL(`../out/${file}`, import.meta.url), "utf8"), await readFile(new URL(`../public/${file}`, import.meta.url), "utf8"));
+  for (const file of ["twin.md", "llms.txt", "robots.txt", "sitemap.xml"]) assert.equal(await readFile(new URL(`../out/${file}`, import.meta.url), "utf8"), await readFile(new URL(`../public/${file}`, import.meta.url), "utf8"));
+  const robots = await readFile(new URL("../public/robots.txt", import.meta.url), "utf8");
+  for (const agent of ["OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-User"]) assert.ok(robots.includes(`User-agent: ${agent}\nAllow: /`));
+  const sitemap = await readFile(new URL("../public/sitemap.xml", import.meta.url), "utf8");
+  for (const route of ["", "about", "work", ...workEntries.map(({ slug }) => `work/${slug}`), "projects", ...projectEntries.filter(({ hasDetailPage }) => hasDetailPage).map(({ slug }) => `projects/${slug}`), "twin.md", "llms.txt"]) assert.ok(sitemap.includes(`<loc>https://alenpjose.ca/${route}</loc>`));
 });

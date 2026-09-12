@@ -35,7 +35,7 @@ npm test
 
 ## Professional twin
 
-The home-page section opens the visitor's own ChatGPT or Claude with a visible prompt. Assistant behaviour varies: in the 2026-09-12 browser check, Claude prefilled the composer while ChatGPT immediately began a response. The section explains this before the links and exposes the exact prompt for review. There is no client-side auto-submit code, model API call, key, added dependency, or new third-party script. The existing Vercel Analytics integration is unchanged.
+The home-page section is marked beta and uses a copy-first handoff for ChatGPT. “Copy prompt + profile” fetches the generated profile from the same site and places both the instructions and full source in the visitor's clipboard. “Copy prompt only” remains available for assistants with working web access. ChatGPT opens without query parameters; Claude keeps its working prefilled-prompt link, with full copy as its retrieval fallback. There is no client-side auto-submit code, model API call, key, added dependency, or new third-party script. The existing Vercel Analytics integration is unchanged.
 
 `scripts/build-twin.ts` runs during `prebuild` and `predev` using Node 22's type stripping. It generates `public/twin.md` and `public/llms.txt`, which are ignored by Git and copied into the export. It reads only `content/work.ts`, `content/projects.ts`, and `content/twin.ts`; no résumé extraction or component parsing occurs at build time.
 
@@ -45,7 +45,9 @@ Alen approved all six reasoning heuristics after the extract/interview review in
 
 The profile is 3,659 whitespace-delimited words at introduction. Tests check disclosure, rules, every entry heading, full prose and evidence boundaries, project maturity, the empty-heuristic case, generated/exported agreement, and exact visible deep-link prompts. The route suite requires every exported HTML page to be registered and checks `/twin.md` and `/llms.txt` over HTTP.
 
-`lib/twin-links.ts` owns the exact prompt and a single `claudePromptBase` constant. Claude's `q` parameter is undocumented; replace that constant or set it to `null` to hide the Claude link. The section exposes the full prompt and profile as a manual fallback. Link prefilling and web retrieval depend on the visitor's assistant, account, and web access.
+`lib/twin-links.ts` owns the exact prompt, the plain ChatGPT destination, and Claude's prefill base in one nullable constant. The section exposes the full prompt and profile as a manual fallback. Prompt-only web retrieval still depends on the visitor's assistant, account, and web access.
+
+The build also generates an explicit `robots.txt` allowing OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-User, and other crawlers, plus a `sitemap.xml` containing every public HTML page, `/twin.md`, and `/llms.txt`. These improve discovery but do not guarantee that an assistant will perform a live fetch.
 
 At Alen's request, both the prompt and profile rules permit the generated document and public pages on `https://alenpjose.ca`. Assistants should cite the pages they use, disclose unavailable sources, use the remaining permitted pages, and flag conflicts. External links do not extend the allowed sources. The generated Markdown itself still reads only the approved typed modules at build time.
 
