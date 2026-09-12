@@ -35,7 +35,7 @@ npm test
 
 ## Professional twin
 
-The home-page section opens the visitor's own ChatGPT or Claude with a visible prompt. The visitor reviews and sends it. There are no model API calls, keys, added dependencies, or new third-party scripts. The existing Vercel Analytics integration is unchanged.
+The home-page section opens the visitor's own ChatGPT or Claude with a visible prompt. Assistant behaviour varies: in the 2026-09-12 browser check, Claude prefilled the composer while ChatGPT immediately began a response. The section explains this before the links and exposes the exact prompt for review. There is no client-side auto-submit code, model API call, key, added dependency, or new third-party script. The existing Vercel Analytics integration is unchanged.
 
 `scripts/build-twin.ts` runs during `prebuild` and `predev` using Node 22's type stripping. It generates `public/twin.md` and `public/llms.txt`, which are ignored by Git and copied into the export. It reads only `content/work.ts`, `content/projects.ts`, and `content/twin.ts`; no résumé extraction or component parsing occurs at build time.
 
