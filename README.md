@@ -43,9 +43,11 @@ The home intro and progression paragraphs originally lived in `app/page.tsx`; th
 
 Alen approved all six reasoning heuristics after the extract/interview review in this task: all six have extract support, five were refined through the interview, and one is extract-only. He separately approved the coding-development statement and requested evidence-grounded recruiter role-fit answers. Source identifiers and interview dates are recorded in comments; the raw extract is not stored here. The source extract's creation date was not supplied, so the comment records its receipt date instead. The renderer also supports an empty heuristic array.
 
-The profile is 3,568 whitespace-delimited words at introduction. Tests check disclosure, rules, every entry heading, full prose and evidence boundaries, project maturity, the empty-heuristic case, generated/exported agreement, and exact visible deep-link prompts. The route suite requires every exported HTML page to be registered and checks `/twin.md` and `/llms.txt` over HTTP.
+The profile is 3,659 whitespace-delimited words at introduction. Tests check disclosure, rules, every entry heading, full prose and evidence boundaries, project maturity, the empty-heuristic case, generated/exported agreement, and exact visible deep-link prompts. The route suite requires every exported HTML page to be registered and checks `/twin.md` and `/llms.txt` over HTTP.
 
 `lib/twin-links.ts` owns the exact prompt and a single `claudePromptBase` constant. Claude's `q` parameter is undocumented; replace that constant or set it to `null` to hide the Claude link. The section exposes the full prompt and profile as a manual fallback. Link prefilling and web retrieval depend on the visitor's assistant, account, and web access.
+
+At Alen's request, both the prompt and profile rules permit the generated document and public pages on `https://alenpjose.ca`. Assistants should cite the pages they use, disclose unavailable sources, use the remaining permitted pages, and flag conflicts. External links do not extend the allowed sources. The generated Markdown itself still reads only the approved typed modules at build time.
 
 Preview validation must distinguish opening/prefilling from fetching the canonical profile: before this PR is merged, `https://alenpjose.ca/twin.md` may not exist. A preview URL can verify the generated artifact, but cannot establish that an assistant fetched the production URL. Record the actual browser outcomes and test date in the PR; do not mark blocked checks as passed.
 
