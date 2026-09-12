@@ -43,3 +43,5 @@ next-env.d.ts
 # Generated from approved typed content during prebuild/predev.
 /public/twin.md
 /public/llms.txt
+/public/robots.txt
+/public/sitemap.xml

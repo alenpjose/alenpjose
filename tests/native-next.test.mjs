@@ -66,6 +66,8 @@ test("static Next.js portfolio routes", { timeout: 90_000 }, async () => {
       ["/about", "For the love of learning"],
       ["/twin.md", "This is an AI representation"],
       ["/llms.txt", "Professional profile"],
+      ["/robots.txt", "OAI-SearchBot"],
+      ["/sitemap.xml", "https://alenpjose.ca/twin.md"],
     ]);
 
     const pages = (await readdir(new URL("../out/", import.meta.url), { recursive: true }))
@@ -77,7 +79,7 @@ test("static Next.js portfolio routes", { timeout: 90_000 }, async () => {
     for (const [route, expectedText] of routes) {
       const response = await fetch(`${baseUrl}${route}`);
       assert.equal(response.status, 200, route);
-      const expectedType = route === "/twin.md" ? /^text\/markdown\b/i : route === "/llms.txt" ? /^text\/plain\b/i : /^text\/html\b/i;
+      const expectedType = route === "/twin.md" ? /^text\/markdown\b/i : route.endsWith(".txt") ? /^text\/plain\b/i : route.endsWith(".xml") ? /^(?:application|text)\/xml\b/i : /^text\/html\b/i;
       assert.match(response.headers.get("content-type") ?? "", expectedType);
       const html = await response.text();
       assert.match(html, new RegExp(expectedText, "i"), route);
