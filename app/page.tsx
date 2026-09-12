@@ -1,3 +1,5 @@
+import { twinIdentity } from "@/content/twin";
+import { ProfessionalTwin } from "@/components/professional-twin";
 import Link from "next/link";
 import { EntryCard } from "@/components/entry-card";
 import { ResumeLink } from "@/components/resume-link";
@@ -14,8 +16,7 @@ export default function Home() {
         <p className="eyebrow">Toronto, Canada · Production Manager</p>
         <h1>Additive manufacturing leadership, built around real production.</h1>
         <div className="hero-copy">
-          <p>I am an additive manufacturing production leader who translates shop-floor constraints and customer requirements into clear system needs. My work connects operating judgment with process improvement, software, automation, and a developing practical knowledge of AI systems.</p>
-          <p>My engineering background helps me understand customer requirements and translate technical conversations efficiently. Experience in application discovery, DFAM, equipment service, and production has taught me how a design decision, machine setup, process choice, or handling method can affect the result.</p>
+          {twinIdentity.homeIntro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
         <div className="button-row">
           <Link className="button button-primary" href="/about#contact">Contact</Link>
@@ -29,9 +30,7 @@ export default function Home() {
           <h2>Responsibility grew with the problems that needed solving.</h2>
         </div>
         <div className="prose-stack">
-          <p>I joined Designfusion as an Applications Specialist, working directly with additive equipment, customer applications, troubleshooting, and field service. That exposure developed into responsibility for nesting and end-to-end production, followed by production planning, staffing, quality, maintenance, materials, delivery recovery, and the systems used to control the work.</p>
-          <p>Today, I manage a multi-technology additive operation producing more than 50,000 parts in a typical year under my control. The responsibility extends beyond keeping printers running. It includes deciding what should be produced, how work should move, where risk needs to be addressed, and what information people need to make reliable decisions.</p>
-          <p>Software, automation, and AI have become useful extensions of that work. I use them when they fit the operating problem, while keeping production decisions deterministic and human-controlled where reliability and accountability matter.</p>
+          {twinIdentity.homeProgression.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           <Link className="text-link" href="/work">Explore my work →</Link>
         </div>
       </section>
@@ -51,6 +50,8 @@ export default function Home() {
         <blockquote>Questions have driven human progress and my own development. Learning begins by identifying gaps, taking apart assumptions, and rebuilding a clearer understanding of the whole.</blockquote>
         <Link className="text-link" href="/about">More about my approach →</Link>
       </section>
+
+      <ProfessionalTwin />
 
       <section className="contact-band page-section" id="contact">
         <div>

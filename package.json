@@ -6,12 +6,14 @@
     "node": "22.x"
   },
   "scripts": {
+    "predev": "node --experimental-strip-types scripts/build-twin.ts",
     "dev": "next dev",
+    "prebuild": "node --experimental-strip-types scripts/build-twin.ts",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/serve-export.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit --incremental false",
-    "test": "npm run build && node --test tests/native-next.test.mjs"
+    "test": "npm run build && node --experimental-strip-types --test tests/*.test.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "2.0.1",

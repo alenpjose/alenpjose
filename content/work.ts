@@ -52,13 +52,13 @@ export const workEntries: WorkEntry[] = [
     status: "Deployed workflow",
     role: "Workflow mapping, system design, evaluation, configuration, migration, training, and ownership",
     featured: false,
-    topics: ["Production systems", "Odoo", "SharePoint", "Workflow design"],
+    topics: ["Production systems", "Phasio", "SharePoint", "Workflow design"],
     evidenceLevel: "Deployed professional system",
     confidentialityNote:
       "The public description remains intentionally high-level because the detailed workflow reflects internal company operations.",
     aiInvolvement:
       "AI-assisted coding supported prototype development. No language model controlled or interpreted the production workflow.",
-    revisionDate: "2026-08-30",
+    revisionDate: "2026-09-12",
     media: {
       kind: "video",
       src: "/assets/control-system-walkthrough.mp4",
@@ -71,7 +71,7 @@ export const workEntries: WorkEntry[] = [
         paragraphs: [
           "As production grew, managing orders through email, phone calls, pen-and-paper notes, and Excel became increasingly difficult. The goal of this work was to understand what information production needed, how records should relate, and which system could support the workflow without losing the operating detail required on the floor.",
           "I mapped the workflow and designed the information model, record relationships, status logic, user needs, and rollout approach. A SharePoint-based system was used in production and became a practical benchmark for understanding what the operation required. AI coding tools also helped me explore how the workflow could be represented in a web application. AI was used to plan and create that prototype, not to make production decisions.",
-          "The production workflow remained deterministic and human-controlled. The systems were used to validate requirements before available platforms were compared. I researched the options, selected Odoo as the suitable platform, configured it, migrated the required information, trained the production department, led the rollout, and retained ownership of how the process was used.",
+          "The production workflow remained deterministic and human-controlled. The systems were used to validate requirements before available platforms were compared. I researched the options, selected Phasio as the suitable platform, configured it, migrated the required information, trained the production department, led the rollout, and retained ownership of how the process was used.",
           "The deployed system made part tracking more efficient, centralized order-level communication, improved shift handovers through recorded information, and made nesting more reliable by organizing parts around deadlines and returning scrapped parts to the print queue.",
         ],
       },

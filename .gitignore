@@ -39,3 +39,7 @@ next-env.d.ts
 /output/
 /tmp/
 /work/
+
+# Generated from approved typed content during prebuild/predev.
+/public/twin.md
+/public/llms.txt
