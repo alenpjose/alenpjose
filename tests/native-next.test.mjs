@@ -68,13 +68,14 @@ test("static Next.js portfolio routes", { timeout: 90_000 }, async () => {
       ["/llms.txt", "Professional profile"],
       ["/robots.txt", "OAI-SearchBot"],
       ["/sitemap.xml", "https://alenpjose.ca/twin.md"],
+      ["/google4320e5646f442af9.html", "google-site-verification: google4320e5646f442af9.html"],
     ]);
 
     const pages = (await readdir(new URL("../out/", import.meta.url), { recursive: true }))
       .map((path) => path.replaceAll("\\", "/"))
       .filter((path) => path.endsWith(".html") && !["404.html", "_not-found.html"].includes(path))
-      .map((path) => path === "index.html" ? "/" : `/${path.slice(0, -5)}`);
-    assert.deepEqual(new Set(pages), new Set([...routes.keys()].filter((route) => !route.includes("."))), "Every exported HTML route must be registered");
+      .map((path) => path === "index.html" ? "/" : routes.has(`/${path}`) ? `/${path}` : `/${path.slice(0, -5)}`);
+    assert.deepEqual(new Set(pages), new Set([...routes.keys()].filter((route) => !route.includes(".") || route.endsWith(".html"))), "Every exported HTML route must be registered");
 
     for (const [route, expectedText] of routes) {
       const response = await fetch(`${baseUrl}${route}`);
