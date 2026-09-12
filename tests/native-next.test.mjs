@@ -80,13 +80,18 @@ test("static Next.js portfolio routes", { timeout: 90_000 }, async () => {
     for (const [route, expectedText] of routes) {
       const response = await fetch(`${baseUrl}${route}`);
       assert.equal(response.status, 200, route);
-      const expectedType = route === "/twin.md" ? /^text\/markdown\b/i : route.endsWith(".txt") ? /^text\/plain\b/i : route.endsWith(".xml") ? /^(?:application|text)\/xml\b/i : /^text\/html\b/i;
+      const expectedType = route === "/twin.md" ? /^text\/plain\b/i : route.endsWith(".txt") ? /^text\/plain\b/i : route.endsWith(".xml") ? /^(?:application|text)\/xml\b/i : /^text\/html\b/i;
       assert.match(response.headers.get("content-type") ?? "", expectedType);
       const html = await response.text();
       assert.match(html, new RegExp(expectedText, "i"), route);
       assert.doesNotMatch(html, /href=["']\/settings["']/i);
       assert.doesNotMatch(html, /four production staff/i);
     }
+
+    const versionedProfile = await fetch(`${baseUrl}/twin.md?v=2`);
+    assert.equal(versionedProfile.status, 200);
+    assert.match(versionedProfile.headers.get("content-type"), /^text\/plain\b/i);
+    assert.equal(await versionedProfile.text(), await (await fetch(`${baseUrl}/twin.md`)).text());
 
     const resume = await fetch(`${baseUrl}/resume.pdf`);
     assert.equal(resume.status, 200);
